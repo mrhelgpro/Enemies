@@ -23,7 +23,16 @@ namespace Animachine.Scripts.States
 
         protected override void OnUpdate()
         {
-            FreeDirectionCheck();
+            // Check mode
+            if (_navigation.Mode is NavigationMode.Horizontal)
+            {
+                PatrolByHorizontal();
+            }
+            else
+            {
+                PatrolByFly();
+            }
+            
             SetDestination();
         }
 
@@ -33,12 +42,31 @@ namespace Animachine.Scripts.States
         }
 
         // Patrol Methods
-        private void FreeDirectionCheck()
+        private void PatrolByHorizontal()
         {
             // Setting the destination
             var horizontal = _navigation.Position.x + _moveDirection;
             var vertical = _navigation.Position.y;
             _destination = new Vector3(horizontal, vertical, 0);
+            
+            // Check for a stuck 
+            if (Mathf.Approximately(_navigation.Velocity.x, 0) == false) return;
+
+            // Duration of stuck time
+            _timeStuck += Time.deltaTime;
+            if (_timeStuck > 0.1f == false) return;
+
+            // Change of direction
+            _moveDirection *= -1;
+            _timeStuck = 0;
+        }
+
+        private void PatrolByFly() // IT NEEDS TO BE FIXED!
+        {
+            // Setting the destination
+            var horizontal = _navigation.Position.x + _moveDirection;
+            var vertical = _navigation.Position.y - 1;
+            _destination = new Vector3(horizontal, vertical , 0);
             
             // Check for a stuck 
             if (Mathf.Approximately(_navigation.Velocity.x, 0) == false) return;

@@ -2,8 +2,11 @@ using UnityEngine;
 
 namespace Animachine.Scripts.Interfaces
 {
+    public enum NavigationMode { Horizontal, Fly }
+    
     public interface INavigation
     {
+        public NavigationMode Mode { get; }
         public Vector3 Position { get; }
         public Vector3 Velocity { get; }
         public bool IsGrounded { get; }

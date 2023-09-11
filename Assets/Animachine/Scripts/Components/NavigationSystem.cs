@@ -6,6 +6,8 @@ namespace Animachine.Scripts.Components
     [RequireComponent(typeof(Rigidbody2D))]
     public class NavigationSystem : MonoBehaviour, INavigation
     {
+        [SerializeField] private NavigationMode mode;
+
         // Set Movable
         private float _speed;
         private Vector3 _destination;
@@ -20,6 +22,7 @@ namespace Animachine.Scripts.Components
         {
             _thisTransform = transform;
             _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody.gravityScale = mode is NavigationMode.Fly ? 0 : 1;
             _groundLayer = LayerMask.GetMask("Default");
         }
 
@@ -30,6 +33,7 @@ namespace Animachine.Scripts.Components
         }
 
         // INavigation
+        public NavigationMode Mode => mode;
         public Vector3 Position => _thisTransform.position;
         public Vector3 Velocity => _rigidbody.velocity;
         public Vector3 Direction => IsDestination ? new Vector3(Mathf.Sign(_thisTransform.localScale.x),0,0) : (_destination - Position).normalized;
@@ -37,7 +41,14 @@ namespace Animachine.Scripts.Components
         public bool IsDestination => Distance < 0.25f;
         public float Distance { get; private set; }
         public void SetSpeed(float value) => _speed = value;
-        public void SetDestination(Vector3 vector) => _destination = vector;
+
+        public void SetDestination(Vector3 vector)
+        {
+            var height = mode is NavigationMode.Fly ? 1 : 0; // IT NEEDS TO BE FIXED!
+            var offset = new Vector3(0, height, 0);
+            _destination = vector + offset;
+        }
+
         public void SetLookDirection(Vector3 vector)
         {
             var horizontal = vector.x == 0 ? 0 : Mathf.Sign(vector.x);
@@ -67,10 +78,18 @@ namespace Animachine.Scripts.Components
                 return;
             }
             
-            MoveToPosition();
+            // Check mode
+            if (mode is NavigationMode.Horizontal)
+            {
+                MoveByHorizontal();
+            }
+            else
+            {
+                MoveByFly();
+            }
         }
 
-        private void MoveToPosition()
+        private void MoveByHorizontal()
         {
             _rigidbody.velocity = new Vector2(Direction.x * (_speed * Time.fixedDeltaTime), Velocity.y);
             
@@ -79,6 +98,12 @@ namespace Animachine.Scripts.Components
             var targetPosition = _rigidbody.position + velocity;
             _rigidbody.MovePosition(targetPosition);
             */
+        }
+
+        private void MoveByFly()
+        {
+            var velocity = Direction * (_speed * Time.fixedDeltaTime);
+            _rigidbody.velocity = velocity;
         }
 
         // Flip
