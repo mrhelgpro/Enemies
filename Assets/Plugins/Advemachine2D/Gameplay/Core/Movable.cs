@@ -40,6 +40,7 @@ namespace Advemachine2D.Gameplay.Core
         private PhysicsMaterial2D _slidingMaterial;
         private Transform _thisTransform;
 
+        // MonoBehaviour
         private void OnEnable()
         {
             _inputable = GetComponent<Inputable>();
@@ -52,7 +53,6 @@ namespace Advemachine2D.Gameplay.Core
             _inputable.OnJumpEvent -= Jump;
         }
 
-        // MonoBehaviour
         private void Awake()
         {
             _thisTransform = transform;
@@ -172,7 +172,6 @@ namespace Advemachine2D.Gameplay.Core
             var surfaceAngle = hit.collider == null ? 0 : Mathf.Abs(Mathf.Round(angleInRadians * Mathf.Rad2Deg - 90));
 
             var directionToSlope = Mathf.Approximately(Mathf.Sign(_inputable.moveDirection.x),Mathf.Sign(_thisTransform.localScale.x));
-            //Mathf.Sign(_inputable.moveDirection.x) == Mathf.Sign(_thisTransform.localScale.x);
 
             _isObstacle = directionToSlope && surfaceAngle > maxSurfaceAngle;
         }

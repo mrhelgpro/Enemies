@@ -5,7 +5,7 @@ namespace Advemachine2D.Gameplay.Input
 {
     [AddComponentMenu("Advemachine2D/Input/InputJumpController")]
     [RequireComponent(typeof(Inputable))]
-    [RequireComponent(typeof(Movable))]
+    //[RequireComponent(typeof(Movable))]
     public class InputJumpController : MonoBehaviour
     {
         public enum  Mode { Button, Auto }
