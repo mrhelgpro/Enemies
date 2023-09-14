@@ -1,7 +1,7 @@
 using Animachine.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Animachine.Scripts.Utilities
+namespace Animachine.Scripts.Interactions
 {
     public class DetectorCollider2D : MonoBehaviour
     {

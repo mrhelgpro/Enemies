@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Animachine.Scripts.States
 {
-    public class Patrolling : AnimachineState
+    public class GroundPatrolling : AnimachineState
     {
-        [SerializeField] private float speed;
+        [SerializeField] private float moveSpeed = 100;
         
         // Buffer
         private float _timeStuck;
@@ -14,7 +14,7 @@ namespace Animachine.Scripts.States
         private Vector3 _destination;
         private INavigation _navigation;
 
-        // Animachine Methods
+        // Animachine
         protected override void OnEnter()
         {
             _navigation = ThisTransform.GetComponentInParent<INavigation>();
@@ -23,16 +23,7 @@ namespace Animachine.Scripts.States
 
         protected override void OnUpdate()
         {
-            // Check mode
-            if (_navigation.Mode is NavigationMode.Horizontal)
-            {
-                PatrolByHorizontal();
-            }
-            else
-            {
-                PatrolByFly();
-            }
-            
+            Patrolling();
             SetDestination();
         }
 
@@ -41,8 +32,8 @@ namespace Animachine.Scripts.States
             _navigation.SetDestination(_navigation.Position);
         }
 
-        // Patrol Methods
-        private void PatrolByHorizontal()
+        // Ground Patrol
+        private void Patrolling()
         {
             // Setting the destination
             var horizontal = _navigation.Position.x + _moveDirection;
@@ -61,28 +52,9 @@ namespace Animachine.Scripts.States
             _timeStuck = 0;
         }
 
-        private void PatrolByFly() // IT NEEDS TO BE FIXED!
-        {
-            // Setting the destination
-            var horizontal = _navigation.Position.x + _moveDirection;
-            var vertical = _navigation.Position.y - 1;
-            _destination = new Vector3(horizontal, vertical , 0);
-            
-            // Check for a stuck 
-            if (Mathf.Approximately(_navigation.Velocity.x, 0) == false) return;
-
-            // Duration of stuck time
-            _timeStuck += Time.deltaTime;
-            if (_timeStuck > 0.1f == false) return;
-
-            // Change of direction
-            _moveDirection *= -1;
-            _timeStuck = 0;
-        }
-
         private void SetDestination()
         {
-            _navigation.SetSpeed(speed);
+            _navigation.SetSpeed(moveSpeed);
             _navigation.SetDestination(_destination);
             _navigation.SetLookDirection(_navigation.Direction);
         }

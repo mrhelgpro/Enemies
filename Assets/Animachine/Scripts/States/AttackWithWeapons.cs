@@ -1,6 +1,6 @@
 using Animachine.Scripts.Core;
+using Animachine.Scripts.Interactions;
 using Animachine.Scripts.Interfaces;
-using Animachine.Scripts.Utilities;
 using UnityEngine;
 
 namespace Animachine.Scripts.States
@@ -18,7 +18,7 @@ namespace Animachine.Scripts.States
         {
             _detectable = ThisTransform.GetComponentInParent<IDetectable>();
 
-            weapon = ThisTransform; // IT NEEDS TO BE FIXED!
+            weapon = weapon == null ? ThisTransform : weapon;
             
             if(prefab == null || weapon == null) return;
             

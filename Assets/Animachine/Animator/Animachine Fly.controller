@@ -52,7 +52,7 @@ AnimatorState:
   - {fileID: 1234115731305493950}
   - {fileID: -8248168082368006642}
   m_StateMachineBehaviours:
-  - {fileID: -5360249143066823331}
+  - {fileID: 5922860941703148940}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -74,7 +74,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attack Melee
+  m_Name: Attack Range
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -119,19 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332efeb6ca204644e8ecc7dd3c6fad30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5360249143066823331
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18af7c3565d71ca4eb83a98ddc5a66a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 100
 --- !u!114 &-4690035057052497348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,7 +240,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Animachine Melee
+  m_Name: Animachine Fly
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: stateTime
@@ -556,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ca59a4051c17049ba50c44383c8449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 4558438940060125165, guid: c9d72d48e633abe4b8359c391617632a, type: 3}
   weapon: {fileID: 0}
 --- !u!1102 &4224181176026573357
 AnimatorState:
@@ -671,6 +658,20 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!114 &5922860941703148940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf441ba35c68ce4eb39f0b9d526eeeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 100
+  radiusPatrolling: 10
 --- !u!1102 &6585985168296351583
 AnimatorState:
   serializedVersion: 6
@@ -757,7 +758,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: distance
-    m_EventTreshold: 2
+    m_EventTreshold: 10
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6388361053175133599}
   m_Solo: 0

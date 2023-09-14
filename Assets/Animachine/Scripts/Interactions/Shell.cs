@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Animachine.Scripts.Utilities
+namespace Animachine.Scripts.Interactions
 {
     public class Shell : MonoBehaviour
     {
